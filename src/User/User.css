@@ -1,0 +1,16 @@
+/* User.css */
+
+.user-container {
+    max-width: 1200px; /* Limit the width to 1200px */
+    margin: 0 auto; /* Center the container */
+    padding: 20px; /* Add some padding */
+}
+
+.action-button {
+    margin-right: 10px; /* Add some space between buttons */
+}
+
+.invoice-card {
+    margin-top: 20px; /* Add some space between the buttons and the invoices */
+}
+

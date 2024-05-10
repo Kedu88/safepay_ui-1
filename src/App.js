@@ -1,24 +1,23 @@
 import logo from './logo.svg';
 import './App.css';
+import Login from "./Login/Login";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Logout from './Logout/Logout';
+import Sysadmin from "./SysAdmin/Sysadmin";
+import Staff from "./Staff/Staff";
+import User from "./User/User"; // Import the Logout component
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <BrowserRouter>
+        <Routes>
+            <Route path="/" element={<Login />} />
+            <Route path="/logout" element={<Logout />} />
+            <Route path="/sysadmin" element={<Sysadmin />} />
+            <Route path="/staff" element={<Staff />} />
+            <Route path="/user" element={<User />} />
+        </Routes>
+      </BrowserRouter>
   );
 }
 
