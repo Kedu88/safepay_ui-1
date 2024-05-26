@@ -50,9 +50,8 @@ console.log(staffData);
             
         })
         .then(data => {
-            console.log('Response data:', data);
-            if (data.message === 'Staff created successfully!') {
-                setSuccess('Staff created successfully!');
+            if (data.success) {
+                setSuccess('Staff registered successfully!');
                 // Optionally, clear the form
                 setEmail('');
                 setPassword('');

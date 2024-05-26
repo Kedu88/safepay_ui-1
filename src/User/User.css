@@ -1,9 +1,9 @@
 /* User.css */
 
 .user-container {
-  display: block;
+    max-width: 1200px; /* Limit the width to 1200px */
+    margin: 0 auto; /* Center the container */
     padding: 20px; /* Add some padding */
-    width: 600px;
 }
 
 .action-button {
@@ -14,30 +14,3 @@
     margin-top: 20px; /* Add some space between the buttons and the invoices */
 }
 
-.gross-submit{
-
-margin-top: 15px;
-
-}
-
-
-
-
-
-.row-center{
-
-text-align: center;
-margin-top: 50px !important;
-
-}
-
-
-.form-center{
-
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: center ;
-text-align: center;
-margin-top: 40px;
-}
