@@ -36,15 +36,28 @@ const Sysadmin = () => {
                 <Row>
                     <Col>
                         <h1>Welcome, Sysadmin!</h1>
-                        <p>As a Sysadmin, you are responsible for introducing new users, staffs and admins to the Online Tax Payment System. Use the buttons below to create a new user, staff or admin.</p>
-                       
-                        <div className='RegisterButton'>
-                            <Button href='/UserRegister'  type="submit">   Introduce User  </Button>
-                            <Button href='/StaffRegister'  type="submit">   Introduce Staff </Button>
-                            <Button href='/AdminRegister'  type="submit">   Introduce Admin  </Button>
-                        </div>      
-                            
-                        
+                        <p>As a Sysadmin, you are responsible for introducing new users to the Online Tax Payment System. Use the form below to create a new user account.</p>
+                        <Form onSubmit={handleSubmit}>
+                            <Form.Group className="mb-3" controlId="name">
+                                <Form.Label>Name</Form.Label>
+                                <Form.Control type="text" placeholder="Name" value={newUser.name} onChange={(e) => setNewUser({...newUser, name: e.target.value})} />
+                            </Form.Group>
+                            <Form.Group className="mb-3" controlId="email">
+                                <Form.Label>Email</Form.Label>
+                                <Form.Control type="text" placeholder="Email" value={newUser.email} onChange={(e) => setNewUser({...newUser, email: e.target.value})} />
+                            </Form.Group>
+                            <Form.Group className="mb-3" controlId="taxId">
+                                <Form.Label>Tax ID</Form.Label>
+                                <Form.Control type="text" placeholder="Tax ID" value={newUser.taxId} onChange={(e) => setNewUser({...newUser, taxId: e.target.value})} />
+                            </Form.Group>
+                            <Form.Group className="mb-3" controlId="address">
+                                <Form.Label>Address</Form.Label>
+                                <Form.Control type="text" placeholder="Address" value={newUser.address} onChange={(e) => setNewUser({...newUser, address: e.target.value})} />
+                            </Form.Group>
+                            <Button variant="primary" type="submit">
+                                Introduce User
+                            </Button>
+                        </Form>
                     </Col>
                 </Row>
             </Container>
