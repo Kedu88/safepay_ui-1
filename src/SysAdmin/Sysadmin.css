@@ -1,0 +1,54 @@
+/* Sysadmin.css */
+
+.header1 {
+
+margin-top: 50px;
+
+}
+
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    text-decoration: none;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+
+
+.register-button{
+
+    display: flex ;
+    justify-content: center;
+
+}
+
+.RegisterButton{
+
+display: flex;
+flex-direction: row;
+justify-content: center;
+gap: 10px;
+}
+
+/* Adjustments for Header and Footer */
+

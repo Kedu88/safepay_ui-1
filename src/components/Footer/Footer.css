@@ -1,0 +1,56 @@
+/* Footer.css */
+
+.footer {
+    background-color: #333; /* Dark gray background */
+    color: #fff; /* White text */
+    padding: 20px; /* Add some padding */
+    text-align: center; /* Center the content */
+    clear: both; /* Clear any floats from the content */
+}
+
+.footer-container {
+    max-width: 1200000px; /* Limit the width to 1200px */
+    margin: 0 auto; /* Center the container */
+    padding: 1px; /* Add some padding */
+}
+
+.footer-links {
+    list-style: none; /* Remove bullet points */
+    margin: 0; /* Remove margin */
+    padding: 0; /* Remove padding */
+    display: flex; /* Make it a flex container */
+    justify-content: center; /* Center the links */
+}
+
+.footer-links li {
+    margin-right: 20px; /* Add some space between links */
+}
+
+.footer-links a {
+    color: #fff; /* White text */
+    text-decoration: none; /* Remove underline */
+    transition: color 0.2s ease; /* Add a transition effect */
+}
+
+.footer-links a:hover {
+    color: #ccc; /* Light gray text on hover */
+}
+
+.footer-social {
+    margin-top: 20px; /* Add some space between links and social icons */
+}
+
+.social-link {
+    margin-right: 20px; /* Add some space between social icons */
+    font-size: 24px; /* Increase the font size */
+    color: #fff; /* White text */
+    transition: color 0.2s ease; /* Add a transition effect */
+}
+
+.social-link:hover {
+    color: #ccc; /* Light gray text on hover */
+}
+
+.fa {
+    font-size: 24px; /* Increase the font size */
+}

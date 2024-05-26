@@ -1,0 +1,126 @@
+/* Staff.css */
+.staff-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+    margin-bottom: 500px;
+}
+
+.staff-container h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #3f51b5;
+    margin-bottom: 30px;
+}
+
+.staff-container button {
+    background-color: #3f51b5;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.staff-container button:hover {
+    background-color: #283593;
+}
+
+.staff-container input[type="text"],
+.staff-container input[type="number"] {
+    width: 300px;
+    height: 40px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 0 10px;
+    font-size: 1rem;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.staff-container ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 800px;
+}
+
+.staff-container li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.staff-container li h3 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #3f51b5;
+    margin-bottom: 10px;
+}
+
+.staff-container lip {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.staff-container li button {
+    margin-top: 10px;
+}
+
+.staff-container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+p {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+.action-button {
+    display: inline-block;
+    margin-right: 10px;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    text-decoration: none;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.action-button:hover {
+    background-color: #007bff;
+}
+
+/* Adjustments for Header and Footer */
+
