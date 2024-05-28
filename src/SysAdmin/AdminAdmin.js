@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Sysadmin.css'; // Import your CSS file for styling
+import '../Staff/Staff.css'; 
 import safelogo from '../images/safepaylogo.png';
 import userprofile from '../images/user-profile.png';
 import logout from '../images/logout.png';
@@ -8,12 +8,60 @@ import Footer from "../components/Footer/Footer";
 
 const AdminRegister = () => {
     const [email, setEmail] = useState('');
-    const [address, setAddress] = useState('');
+    const [password, setPassword] = useState('');
     const [showDropdown, setShowDropdown] = useState(false);
+    const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
 
     const handleRegister = (e) => {
         e.preventDefault();
-        // Add your registration logic here
+        setError('');
+        setSuccess('');
+
+        // Prepare data to send to API
+        const adminData = {
+            email: email,
+            password: password
+        };
+
+        console.log(adminData);
+
+        // Example API call to register admin
+        fetch('http://localhost:3000/v1/admin/admin', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(adminData)
+        })
+        .then(response => {
+            if (response.status === 409) {
+                throw new Error('Admin with this email already exists.');
+            }
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Response data:', data);
+            if (data.message === 'Admin created successfully!') {
+                setSuccess('Admin created successfully!');
+                // Optionally, clear the form
+                setEmail('');
+                setPassword('');
+            } else {
+                setError('Failed to register admin');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            if (error.message === 'Admin with this email already exists.') {
+                setError('An admin with this email already exists.');
+            } else {
+                setError('An error occurred. Please try again.');
+            }
+        });
     };
 
     const handleLogout = () => {
@@ -51,15 +99,17 @@ const AdminRegister = () => {
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="address">Address:</label>
+                        <label htmlFor="password">Password:</label>
                         <input
-                            type="text"
-                            id="address"
-                            value={address}
-                            onChange={(e) => setAddress(e.target.value)}
+                            type="password"
+                            id="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                             required
                         />
                     </div>
+                    {error && <p className="error-message">{error}</p>}
+                    {success && <p className="success-message">{success}</p>}
                     <button type="submit" style={{alignSelf:'center'}} className="register-button">
                         Register Admin
                     </button>

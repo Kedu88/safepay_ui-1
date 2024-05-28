@@ -6,7 +6,7 @@ import logout from '../images/logout.png';
 import Header from '../components/Header/Header';
 import Footer from "../components/Footer/Footer";
 
-const StaffRegister = () => {
+const AdminRegister = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showDropdown, setShowDropdown] = useState(false);
@@ -19,49 +19,48 @@ const StaffRegister = () => {
         setSuccess('');
 
         // Prepare data to send to API
-        const staffData = {
+        const adminData = {
             email: email,
             password: password
         };
 
+        console.log(adminData);
 
-
-
-console.log(staffData);
-
-
-
-
-
-        // Example API call to register staff
+        // Example API call to register admin
         fetch('http://localhost:3000/v1/admin/staff', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(staffData)
+            body: JSON.stringify(adminData)
         })
         .then(response => {
+            if (response.status === 409) {
+                throw new Error('Admin with this email already exists.');
+            }
             if (!response.ok) {
-                throw new Error('Network response was not ok');   
+                throw new Error('Network response was not ok');
             }
             return response.json();
-
-            
         })
         .then(data => {
-            if (data.success) {
-                setSuccess('Staff registered successfully!');
+            console.log('Response data:', data);
+            if (data.message === 'Staff created successfully!') {
+                setSuccess('Staff created successfully!');
                 // Optionally, clear the form
                 setEmail('');
                 setPassword('');
             } else {
-                setError('Failed to register staff');
+                setError('Failed to register admin');
             }
         })
         .catch(error => {
             console.error('Error:', error);
-            setError('An error occurred. Please try again.');
+            if (error.message === 'Admin with this email already exists.') {
+                setError('An admin with this email already exists.');
+            } else {
+                setError('An error occurred. Please try again.');
+            }
         });
     };
 
@@ -72,8 +71,6 @@ console.log(staffData);
     const toggleDropdown = () => {
         setShowDropdown(!showDropdown);
     };
-
-    
 
     return (
         <div className="register-container">
@@ -89,7 +86,7 @@ console.log(staffData);
 
             {/* Main Content */}
             <main className="main">
-                <h2 className='header1'>Register Staff</h2>
+                <h2 className='header1'>Register Admin</h2>
                 <form onSubmit={handleRegister}>
                     <div className="form-group">
                         <label htmlFor="email">Email:</label>
@@ -114,7 +111,7 @@ console.log(staffData);
                     {error && <p className="error-message">{error}</p>}
                     {success && <p className="success-message">{success}</p>}
                     <button type="submit" style={{alignSelf:'center'}} className="register-button">
-                        Register Staff
+                        Register Admin
                     </button>
                 </form>
             </main>
@@ -125,4 +122,4 @@ console.log(staffData);
     );
 };
 
-export default StaffRegister;
+export default AdminRegister;

@@ -7,8 +7,8 @@ import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
 
 const UserRegister = () => {
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
+    const [name, setName] = useState('');
+    const [surname, setSurname] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showDropdown, setShowDropdown] = useState(false);
@@ -22,8 +22,8 @@ const UserRegister = () => {
 
         // Prepare data to send to API
         const userData = {
-            firstName,
-            lastName,
+            name,
+            surname,
             email,
             password
         };
@@ -38,20 +38,21 @@ const UserRegister = () => {
             },
             body: JSON.stringify(userData)
         })
-        .then(response => {
+        .then(async response => {
             console.log('Response status:', response.status);
+            const data = await response.json();
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                throw new Error(data.message || 'Network response was not ok');
             }
-            return response.json();
+            return data;
         })
         .then(data => {
             console.log('Response data:', data);
-            if (data.success) {
-                setSuccess('User registered successfully!');
+            if (data.message === 'User created successfully!') {
+                setSuccess('User created successfully!');
                 // Optionally, clear the form
-                setFirstName('');
-                setLastName('');
+                setName('');
+                setSurname('');
                 setEmail('');
                 setPassword('');
             } else {
@@ -60,7 +61,7 @@ const UserRegister = () => {
         })
         .catch(error => {
             console.error('Error:', error);
-            setError('An error occurred. Please try again.');
+            setError(error.message || 'An error occurred. Please try again.');
         });
     };
 
@@ -89,22 +90,22 @@ const UserRegister = () => {
                 <h2 className='header1'>Register User</h2>
                 <form onSubmit={handleRegister}>
                     <div className="form-group">
-                        <label htmlFor="firstName">First Name:</label>
+                        <label htmlFor="name">First Name:</label>
                         <input
                             type="text"
-                            id="firstName"
-                            value={firstName}
-                            onChange={(e) => setFirstName(e.target.value)}
+                            id="name"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
                             required
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="lastName">Last Name:</label>
+                        <label htmlFor="surname">Last Name:</label>
                         <input
                             type="text"
-                            id="lastName"
-                            value={lastName}
-                            onChange={(e) => setLastName(e.target.value)}
+                            id="surname"
+                            value={surname}
+                            onChange={(e) => setSurname(e.target.value)}
                             required
                         />
                     </div>

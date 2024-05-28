@@ -9,12 +9,11 @@ const Staff = () => {
     const [users, setUsers] = useState([]);
     const [selectedUser, setSelectedUser] = useState(null);
     const [newUser, setNewUser] = useState({
+        userID: '',
         name: '',
+        surname: '',
         email: '',
-        taxId: '',
-        address: '',
-        taxableIncome: 0,
-        taxRate: 0,
+        grossSalary: 0
     });
 
     const loadUsers = async () => {
@@ -26,12 +25,11 @@ const Staff = () => {
         const result = await UserService.createUser(newUser);
         setUsers([...users, result.data]);
         setNewUser({
+            userID: '',
             name: '',
+            surname: '',
             email: '',
-            taxId: '',
-            address: '',
-            taxableIncome: 0,
-            taxRate: 0,
+            grossSalary: 0
         });
     };
 
@@ -62,22 +60,18 @@ const Staff = () => {
 
     const demoUsers = [
         {
-            id: 1,
-            name: 'John Doe',
-            email: 'johndoe@example.com',
-            taxId: '123456789',
-            address: '123 Main St',
-            taxableIncome: 50000,
-            taxRate: 25,
+            userId: '1',
+            name: 'Mustafa',
+            surname: 'Mengutay',
+            email: 'mustafa@mengutay.com',
+            grossSalary: 30000
         },
         {
-            id: 2,
-            name: 'Jane Doe',
-            email: 'janedoe@example.com',
-            taxId: '987654321',
-            address: '456 Elm St',
-            taxableIncome: 75000,
-            taxRate: 30,
+            userId: '2',
+            name: 'Salih',
+            surname: 'Katircioglu',
+            email: 'salih@katircioglu.com',
+            grossSalary: 25000
         },
     ];
 
@@ -94,27 +88,24 @@ const Staff = () => {
                                 <Table striped bordered hover>
                                     <thead>
                                     <tr>
+                                        <th>User Id</th>
                                         <th>Name</th>
-                                        <th>Tax ID</th>
-                                        <th>Address</th>
-                                        <th>Taxable Income</th>
-                                        <th>Tax Rate</th>
-                                        <th>Tax</th>
+                                        <th>Surname</th>
+                                        <th>Email</th>
+                                        <th>grossSalary</th>
                                         <th>Actions</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     {demoUsers.map((user) => (
-                                        <tr key={user.id} onClick={() => handleUserSelect(user)}>
+                                        <tr>
+                                            <td>{user.userId}</td>
                                             <td>{user.name}</td>
-                                            <td>{user.taxId}</td>
-                                            <td>{user.address}</td>
-                                            <td>{user.taxableIncome}</td>
-                                            <td>{user.taxRate}</td>
-                                            <td>{calculateTax(user)}</td>
+                                            <td>{user.surname}</td>
+                                            <td>{user.email}</td>
+                                            <td>{user.grossSalary}</td>
                                             <td>
-                                                <Button variant="primary" size="sm" className="mr-2">Edit</Button>
-                                                <Button variant="danger" size="sm">Delete</Button>
+                                                <Button variant="primary" size="sm" className="mr-2">Calculate Tax</Button>
                                             </td>
                                         </tr>
                                     ))}
