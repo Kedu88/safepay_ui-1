@@ -6,36 +6,24 @@ import Footer from "../components/Footer/Footer";
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import {Link} from "react-router-dom"; // Import Bootstrap components
 
-const App = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-    const handleLogin = () => {
-        // Simulate login logic
-        setIsLoggedIn(true);
-    };
+const LogoutBtn = () => {
+    // const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     const handleLogout = () => {
         // Simulate logout logic
-        setIsLoggedIn(false);
+        localStorage.clear();
+        window.location.href = '/';
+        
     };
 
     return (
         <div className="App">
             <Header />
             <Container className="mt-5">
+                See you
                 <Row>
                     <Col>
-                        {isLoggedIn ? (
-                            <>
-                                <h1>Welcome, User!</h1>
-                                <Button variant="danger" onClick={handleLogout}>Logout</Button>
-                            </>
-                        ) : (
-                            <>
-                                <h1>Please log in</h1>
-                                <Link to="/" className="btn btn-primary">Login</Link>
-                            </>
-                        )}
+                    <Button variant="danger" onClick={handleLogout}>Logout</Button>
                     </Col>
                 </Row>
             </Container>
@@ -44,4 +32,4 @@ const App = () => {
     );
 };
 
-export default App;
+export default LogoutBtn;

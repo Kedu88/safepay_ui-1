@@ -7,6 +7,7 @@ import userprofile from '../images/user-profile.png';
 import logout from '../images/logout.png';
 import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
+import LogoutBtn from '../Logout/Logout';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -33,6 +34,7 @@ const Login = () => {
         })
         .then(data => {
             if (data.userId) {
+                localStorage.setItem('token', data.token);
                 // Check the user role and redirect accordingly
                 switch(data.userRole) {
                     case 'user':
@@ -58,13 +60,15 @@ const Login = () => {
         });
     };
 
-    const handleLogout = () => {
-        // Add your logout logic here
-        // Example: clear user session and redirect to login
-    };
-
     const toggleDropdown = () => {
         setShowDropdown(!showDropdown);
+    };
+
+    const handleLogout = () => {
+        // Simulate logout logic
+        localStorage.clear();
+        window.location.href = '/';
+        
     };
 
     return (
@@ -76,8 +80,9 @@ const Login = () => {
                 showDropdown={showDropdown}
                 logo={safelogo}
                 userProfile={userprofile}
-                logout={logout}
+                logout={<LogoutBtn/>}
             />
+            
 
             {/* Main Content */}
             <main className="main">

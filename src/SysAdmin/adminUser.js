@@ -34,7 +34,8 @@ const UserRegister = () => {
         fetch('http://localhost:3000/v1/admin/user', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem('token'),
             },
             body: JSON.stringify(userData)
         })
