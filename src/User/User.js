@@ -37,6 +37,7 @@ const User = () => {
     }, []);
 
     const [grossSalary, setGrossSalary] = useState('');
+    const [paymentAmount, setPaymentAmount] = useState('');
     const [submittedSalary, setSubmittedSalary] = useState(null);
 
     const handleInputChange = (event) => {
@@ -70,6 +71,22 @@ const User = () => {
             })
             .catch((error) => {
                 console.error('Error:', error);
+            });
+    };
+
+    const handlePaymentForm = (e) => {
+        e.preventDefault();
+
+        fetch('http://localhost:3000/v1/user/tax-payment', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem('token')
+            },
+            body: JSON.stringify({ amount: Number(paymentAmount) }),
+        })
+            .then(res => {
+                console.log(res, 'test');
             });
     };
 
@@ -117,16 +134,33 @@ const User = () => {
                     <Col md={4}>
                         <Card className="invoice-card">
                             <Card.Header>{'Tax Invoice'}</Card.Header>
-                            <ListGroup variant="flush">
-                                <ListGroup.Item>Social Insurance: {taxes.taxes.socialInsurance}</ListGroup.Item>
-                                <ListGroup.Item>Health System: {taxes.taxes.generalHealthSystem}</ListGroup.Item>
-                                <ListGroup.Item>Income Taxes: {taxes.taxes.incomeTax}</ListGroup.Item>
-                                <ListGroup.Item>Total Tax: {taxes.taxes.totalTaxAmount}</ListGroup.Item>
-                                <ListGroup.Item>
-                                    <Button variant="primary" className="action-button">Pay Now</Button>
-                                </ListGroup.Item>
-                            </ListGroup>
+                            {
+                                taxes.message === 'You have already paid your taxes.' ? (<ListGroup variant="flush">
+                                    <ListGroup.Item>Social Insurance: </ListGroup.Item>
+                                    <ListGroup.Item>Health System: </ListGroup.Item>
+                                    <ListGroup.Item>Income Taxes: </ListGroup.Item>
+                                    <ListGroup.Item>Total Tax: </ListGroup.Item>
+                                </ListGroup>) : (<ListGroup variant="flush">
+                                    <ListGroup.Item>Social Insurance: {taxes.taxes.socialInsurance}</ListGroup.Item>
+                                    <ListGroup.Item>Health System: {taxes.taxes.generalHealthSystem}</ListGroup.Item>
+                                    <ListGroup.Item>Income Taxes: {taxes.taxes.incomeTax}</ListGroup.Item>
+                                    <ListGroup.Item>Total Tax: {taxes.taxes.totalTaxAmount}</ListGroup.Item>
+                                </ListGroup>)
+
+                            }
+
                         </Card>
+                        <br></br>
+                        <Form onSubmit={handlePaymentForm}>
+                            <Form.Control
+                                type='text'
+                                placeholder='Enter your the pay amount'
+                                value={paymentAmount}
+                                onChange={(e) => setPaymentAmount(e.target.value)}
+                            />
+                            <br />
+                            <Button variant="primary" className="action-button" type='submit'>Pay Now</Button>
+                        </Form>
                     </Col>
                 </Row>
             </Container>
