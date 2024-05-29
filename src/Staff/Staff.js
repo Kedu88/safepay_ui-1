@@ -49,9 +49,16 @@ const Staff = () => {
         setSelectedUser(null);
     };
 
-    const calculateTax = (user) => {
-        const tax = user.taxableIncome * (user.taxRate / 100);
-        return tax.toFixed(2);
+    const handleCalculate = async (userId) => {
+        const res = await fetch('http://localhost:3000/v1/staff/tax-calculation', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem('token'),
+            },
+            body: JSON.stringify({ userId }),
+        });
+        console.log(await res.json());
     };
 
     return (
@@ -82,7 +89,7 @@ const Staff = () => {
                                                 <td>{user.userId.email}</td>
                                                 <td>{user.grossSalary + 'EUR'}</td>
                                                 <td>
-                                                    <Button variant="primary" size="sm" className="mr-2">Calculate Tax</Button>
+                                                    <Button variant="primary" size="sm" className="mr-2" onClick={() => handleCalculate(user.userId._id)}>Calculate Tax</Button>
                                                 </td>
                                             </tr>
                                         ))}
@@ -110,7 +117,7 @@ const Staff = () => {
                                                 <td>{user.userId.email}</td>
                                                 <td>{user.grossSalary + ' €'}</td>
                                                 <td>
-                                                    <Button variant="primary" size="sm" className="mr-2">Calculate Tax</Button>
+                                                    <Button variant="primary" size="sm" className="mr-2" onClick={() => handleCalculate(user.userId._id)}>Calculate Tax</Button>
                                                 </td>
                                             </tr>
                                         ))}
