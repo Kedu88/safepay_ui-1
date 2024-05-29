@@ -4,7 +4,6 @@ import './Staff.css';
 import Footer from "../components/Footer/Footer";
 import Header from "../components/Header/Header";
 import UserService from "../components/services/UserService";
-import axios from 'axios';
 
 const Staff = () => {
     const [users, setUsers] = useState([]);
@@ -21,12 +20,16 @@ const Staff = () => {
         const fetchTaxData = async () => {
             try {
                 const response = await fetch('http://localhost:3000/v1/staff/taxes', {
+                    method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': localStorage.getItem('token')
+                        'Authorization': localStorage.getItem('token'),
                     },
                 });
-                console.log(await response.json());
+
+                const data = await response.json();
+                console.log(data);
+                setUsers([...data.taxes]);
             } catch (error) {
                 console.error("Error fetching tax data:", error);
             }
@@ -35,21 +38,10 @@ const Staff = () => {
         fetchTaxData();
     }, []);
 
+
     const loadUsers = async () => {
         const result = await UserService.getUsers();
         setUsers(result.data);
-    };
-
-    const createUser = async () => {
-        const result = await UserService.createUser(newUser);
-        setUsers([...users, result.data]);
-        setNewUser({
-            userID: '',
-            name: '',
-            surname: '',
-            email: '',
-            grossSalary: 0
-        });
     };
 
     const updateUser = async () => {
@@ -57,46 +49,14 @@ const Staff = () => {
         setSelectedUser(null);
     };
 
-    const deleteUser = async (id) => {
-        await UserService.deleteUser(id);
-        setUsers(users.filter((user) => user.id !== id));
-    };
-
     const calculateTax = (user) => {
         const tax = user.taxableIncome * (user.taxRate / 100);
         return tax.toFixed(2);
     };
 
-    const sendInvoice = async (user) => {
-        // Generate DES-encrypted invoice
-        // Generate RSA digital signature
-        // Send invoice to user
-    };
-
-    const handleUserSelect = (user) => {
-        setSelectedUser(user);
-    };
-
-    const demoUsers = [
-        {
-            userId: '1',
-            name: 'Mustafa',
-            surname: 'Mengutay',
-            email: 'mustafa@mengutay.com',
-            grossSalary: 30000
-        },
-        {
-            userId: '2',
-            name: 'Salih',
-            surname: 'Katircioglu',
-            email: 'salih@katircioglu.com',
-            grossSalary: 25000
-        },
-    ];
-
     return (
         <>
-            <Header/>
+            <Header />
             <Container className="staff-container">
                 <Row>
                     <Col>
@@ -106,28 +66,26 @@ const Staff = () => {
                                 <p>No users found. Here are some demo users:</p>
                                 <Table striped bordered hover>
                                     <thead>
-                                    <tr>
-                                        <th>User Id</th>
-                                        <th>Name</th>
-                                        <th>Surname</th>
-                                        <th>Email</th>
-                                        <th>grossSalary</th>
-                                        <th>Actions</th>
-                                    </tr>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Surname</th>
+                                            <th>Email</th>
+                                            <th>grossSalary</th>
+                                            <th>Actions</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                    {demoUsers.map((user) => (
-                                        <tr key={user.userId}>
-                                            <td>{user.userId}</td>
-                                            <td>{user.name}</td>
-                                            <td>{user.surname}</td>
-                                            <td>{user.email}</td>
-                                            <td>{user.grossSalary}</td>
-                                            <td>
-                                                <Button variant="primary" size="sm" className="mr-2">Calculate Tax</Button>
-                                            </td>
-                                        </tr>
-                                    ))}
+                                        {users.map((user) => (
+                                            <tr key={user.userId._id}>
+                                                <td>{user.userId.name}</td>
+                                                <td>{user.userId.surname}</td>
+                                                <td>{user.userId.email}</td>
+                                                <td>{user.grossSalary + 'EUR'}</td>
+                                                <td>
+                                                    <Button variant="primary" size="sm" className="mr-2">Calculate Tax</Button>
+                                                </td>
+                                            </tr>
+                                        ))}
                                     </tbody>
                                 </Table>
                             </>
@@ -136,31 +94,26 @@ const Staff = () => {
                                 <Button variant="primary" onClick={loadUsers}>Load Users</Button>
                                 <Table striped bordered hover className="mt-4">
                                     <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Tax ID</th>
-                                        <th>Address</th>
-                                        <th>Taxable Income</th>
-                                        <th>Tax Rate</th>
-                                        <th>Tax</th>
-                                        <th>Actions</th>
-                                    </tr>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Surname</th>
+                                            <th>Email</th>
+                                            <th>Gross Salary</th>
+                                            <th>Actions</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                    {users.map((user) => (
-                                        <tr key={user.id} onClick={() => handleUserSelect(user)}>
-                                            <td>{user.name}</td>
-                                            <td>{user.taxId}</td>
-                                            <td>{user.address}</td>
-                                            <td>{user.taxableIncome}</td>
-                                            <td>{user.taxRate}</td>
-                                            <td>{calculateTax(user)}</td>
-                                            <td>
-                                                <Button variant="primary" size="sm" className="mr-2">Edit</Button>
-                                                <Button variant="danger" size="sm" onClick={() => deleteUser(user.id)}>Delete</Button>
-                                            </td>
-                                        </tr>
-                                    ))}
+                                        {users.map((user) => (
+                                            <tr key={user.userId._id}>
+                                                <td>{user.userId.name}</td>
+                                                <td>{user.userId.surname}</td>
+                                                <td>{user.userId.email}</td>
+                                                <td>{user.grossSalary + ' €'}</td>
+                                                <td>
+                                                    <Button variant="primary" size="sm" className="mr-2">Calculate Tax</Button>
+                                                </td>
+                                            </tr>
+                                        ))}
                                     </tbody>
                                 </Table>
                             </>
@@ -170,27 +123,27 @@ const Staff = () => {
                                 <h2>Edit User</h2>
                                 <Form.Group controlId="formName">
                                     <Form.Label>Name</Form.Label>
-                                    <Form.Control type="text" placeholder="Enter name" value={selectedUser.name} onChange={(e) => setSelectedUser({...selectedUser, name: e.target.value})}/>
+                                    <Form.Control type="text" placeholder="Enter name" value={selectedUser.name} onChange={(e) => setSelectedUser({ ...selectedUser, name: e.target.value })} />
                                 </Form.Group>
                                 <Form.Group controlId="formEmail">
                                     <Form.Label>Email</Form.Label>
-                                    <Form.Control type="email" placeholder="Enter email" value={selectedUser.email} onChange={(e) => setSelectedUser({...selectedUser, email: e.target.value})}/>
+                                    <Form.Control type="email" placeholder="Enter email" value={selectedUser.email} onChange={(e) => setSelectedUser({ ...selectedUser, email: e.target.value })} />
                                 </Form.Group>
                                 <Form.Group controlId="formTaxId">
                                     <Form.Label>Tax ID</Form.Label>
-                                    <Form.Control type="text" placeholder="Enter tax ID" value={selectedUser.taxId} onChange={(e) => setSelectedUser({...selectedUser, taxId: e.target.value})}/>
+                                    <Form.Control type="text" placeholder="Enter tax ID" value={selectedUser.taxId} onChange={(e) => setSelectedUser({ ...selectedUser, taxId: e.target.value })} />
                                 </Form.Group>
                                 <Form.Group controlId="formAddress">
                                     <Form.Label>Address</Form.Label>
-                                    <Form.Control type="text" placeholder="Enter address" value={selectedUser.address} onChange={(e) => setSelectedUser({...selectedUser, address: e.target.value})}/>
+                                    <Form.Control type="text" placeholder="Enter address" value={selectedUser.address} onChange={(e) => setSelectedUser({ ...selectedUser, address: e.target.value })} />
                                 </Form.Group>
                                 <Form.Group controlId="formTaxableIncome">
                                     <Form.Label>Taxable Income</Form.Label>
-                                    <Form.Control type="number" placeholder="Enter taxable income" value={selectedUser.taxableIncome} onChange={(e) => setSelectedUser({...selectedUser, taxableIncome: e.target.value})}/>
+                                    <Form.Control type="number" placeholder="Enter taxable income" value={selectedUser.taxableIncome} onChange={(e) => setSelectedUser({ ...selectedUser, taxableIncome: e.target.value })} />
                                 </Form.Group>
                                 <Form.Group controlId="formTaxRate">
                                     <Form.Label>Tax Rate</Form.Label>
-                                    <Form.Control type="number" placeholder="Enter tax rate" value={selectedUser.taxRate} onChange={(e) => setSelectedUser({...selectedUser, taxRate: e.target.value})}/>
+                                    <Form.Control type="number" placeholder="Enter tax rate" value={selectedUser.taxRate} onChange={(e) => setSelectedUser({ ...selectedUser, taxRate: e.target.value })} />
                                 </Form.Group>
                                 <Button variant="primary" onClick={updateUser}>Save</Button>
                             </div>
@@ -198,7 +151,7 @@ const Staff = () => {
                     </Col>
                 </Row>
             </Container>
-            <Footer/>
+            <Footer />
         </>
     );
 };
