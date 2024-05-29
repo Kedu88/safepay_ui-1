@@ -22,9 +22,10 @@ const User = () => {
 
         // Post gross salary to the API
         fetch('http://localhost:3000/v1/user/gross-salary', {
-            method: 'POST',
+            method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem('token')
             },
             body: JSON.stringify({ grossSalary }),
         })

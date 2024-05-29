@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Button, Table, Form } from 'react-bootstrap';
 import './Staff.css';
 import Footer from "../components/Footer/Footer";
 import Header from "../components/Header/Header";
 import UserService from "../components/services/UserService";
+import axios from 'axios';
 
 const Staff = () => {
     const [users, setUsers] = useState([]);
@@ -15,6 +16,24 @@ const Staff = () => {
         email: '',
         grossSalary: 0
     });
+
+    useEffect(() => {
+        const fetchTaxData = async () => {
+            try {
+                const response = await fetch('http://localhost:3000/v1/staff/taxes', {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': localStorage.getItem('token')
+                    },
+                });
+                console.log(await response.json());
+            } catch (error) {
+                console.error("Error fetching tax data:", error);
+            }
+        };
+
+        fetchTaxData();
+    }, []);
 
     const loadUsers = async () => {
         const result = await UserService.getUsers();
@@ -98,7 +117,7 @@ const Staff = () => {
                                     </thead>
                                     <tbody>
                                     {demoUsers.map((user) => (
-                                        <tr>
+                                        <tr key={user.userId}>
                                             <td>{user.userId}</td>
                                             <td>{user.name}</td>
                                             <td>{user.surname}</td>
@@ -179,7 +198,6 @@ const Staff = () => {
                     </Col>
                 </Row>
             </Container>
-
             <Footer/>
         </>
     );
