@@ -3,6 +3,9 @@ import { Container, Row, Col, Form, Button, Card, ListGroup } from 'react-bootst
 import './User.css';
 import Footer from "../components/Footer/Footer";
 import Header from "../components/Header/Header";
+// import { decrypt } from '../utils/des';
+// import { verifySignedData } from '../utils/rsa';
+// import { verifyHmacSHA256 } from '../utils/mac';
 
 const User = () => {
     const [taxes, setTaxes] = useState({
@@ -27,6 +30,19 @@ const User = () => {
 
                 const data = await response.json();
                 console.log(data);
+
+                // const isVerifiedSignedData = verifySignedData(data.hashBuffer,
+                //     data.signature, data.publicKey);
+                // const isVerifiedHmac = verifyHmacSHA256(data.hashBuffer,
+                //     data.signature, data.publicKey);
+
+                // if (isVerifiedHmac && isVerifiedSignedData) {
+                //     window.alert('Data is verified')
+                // }
+
+                // decrypt(data);
+
+
                 setTaxes(data);
             } catch (error) {
                 console.error("Error fetching tax data:", error);
