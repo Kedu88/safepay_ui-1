@@ -89,7 +89,7 @@ const Staff = () => {
                                                 <td>{user.userId.email}</td>
                                                 <td>{user.grossSalary + 'EUR'}</td>
                                                 <td>
-                                                    <Button variant="primary" size="sm" className="mr-2" onClick={() => handleCalculate(user.userId._id)}>Calculate Tax</Button>
+                                                    <Button variant="primary" size="sm" className="mr-2" onClick={() => handleCalculate(user.userId._id)}>Calculate Tax & Send Invoice</Button>
                                                 </td>
                                             </tr>
                                         ))}
@@ -117,7 +117,7 @@ const Staff = () => {
                                                 <td>{user.userId.email}</td>
                                                 <td>{user.grossSalary + ' €'}</td>
                                                 <td>
-                                                    <Button variant="primary" size="sm" className="mr-2" onClick={() => handleCalculate(user.userId._id)}>Calculate Tax</Button>
+                                                    <Button variant="primary" size="sm" className="mr-2" onClick={() => handleCalculate(user.userId._id)}>Calculate Tax & Send Invoice</Button>
                                                 </td>
                                             </tr>
                                         ))}
