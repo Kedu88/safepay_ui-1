@@ -59,6 +59,7 @@ const Staff = () => {
             body: JSON.stringify({ userId }),
         });
         console.log(await res.json());
+        window.location.reload();
     };
 
     return (
